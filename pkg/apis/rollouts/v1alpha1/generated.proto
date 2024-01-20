@@ -817,6 +817,19 @@ message HeaderRoutingMatch {
   optional StringMatch headerValue = 2;
 }
 
+// HoneycombMetric defines the Honeycomb query to perform canary analysis
+message HoneycombMetric {
+  // Query is a raw honeycomb query to perform
+  optional string query = 1;
+
+  // Dataset is the name of the honeycomb dataset to query
+  optional string dataset = 2;
+
+  // Timeout represents the duration within which a honeycomb query should complete. It is expressed in seconds.
+  // +optional
+  optional int64 timeout = 4;
+}
+
 // InfluxdbMetric defines the InfluxDB Flux query to perform canary analysis
 message InfluxdbMetric {
   // Profile is the name of the secret holding InfluxDB account configuration
@@ -1029,6 +1042,9 @@ message MetricProvider {
   // +kubebuilder:validation:Type=object
   // Plugin specifies the hashicorp go-plugin metric to query
   map<string, bytes> plugin = 12;
+
+  // Honeycomb specifies the honeycomb metric to query
+  optional HoneycombMetric honeycomb = 13;
 }
 
 // MetricResult contain a list of the most recent measurements for a single metric along with

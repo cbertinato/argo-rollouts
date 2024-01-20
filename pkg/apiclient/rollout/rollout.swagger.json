@@ -1230,6 +1230,25 @@
         }
       }
     },
+    "github.com.argoproj.argo_rollouts.pkg.apis.rollouts.v1alpha1.HoneycombMetric": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "title": "Query is a raw honeycomb query to perform"
+        },
+        "dataset": {
+          "type": "string",
+          "title": "Dataset is the name of the honeycomb dataset to query"
+        },
+        "timeout": {
+          "type": "string",
+          "format": "int64",
+          "title": "Timeout represents the duration within which a honeycomb query should complete. It is expressed in seconds.\n+optional"
+        }
+      },
+      "title": "HoneycombMetric defines the Honeycomb query to perform canary analysis"
+    },
     "github.com.argoproj.argo_rollouts.pkg.apis.rollouts.v1alpha1.InfluxdbMetric": {
       "type": "object",
       "properties": {
@@ -1545,6 +1564,10 @@
             "format": "byte"
           },
           "title": "+kubebuilder:validation:Schemaless\n+kubebuilder:pruning:PreserveUnknownFields\n+kubebuilder:validation:Type=object\nPlugin specifies the hashicorp go-plugin metric to query"
+        },
+        "honeycomb": {
+          "$ref": "#/definitions/github.com.argoproj.argo_rollouts.pkg.apis.rollouts.v1alpha1.HoneycombMetric",
+          "title": "Honeycomb specifies the honeycomb metric to query"
         }
       },
       "title": "MetricProvider which external system to use to verify the analysis\nOnly one of the fields in this struct should be non-nil"

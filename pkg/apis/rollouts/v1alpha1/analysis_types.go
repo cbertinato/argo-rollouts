@@ -180,6 +180,8 @@ type MetricProvider struct {
 	// +kubebuilder:validation:Type=object
 	// Plugin specifies the hashicorp go-plugin metric to query
 	Plugin map[string]json.RawMessage `json:"plugin,omitempty" protobuf:"bytes,12,opt,name=plugin"`
+	// Honeycomb specifies the honeycomb metric to query
+	Honeycomb *HoneycombMetric `json:"honeycomb,omitempty" protobuf:"bytes,13,opt,name=honeycomb"`
 }
 
 // AnalysisPhase is the overall phase of an AnalysisRun, MetricResult, or Measurement
@@ -202,6 +204,17 @@ func (as AnalysisPhase) Completed() bool {
 		return true
 	}
 	return false
+}
+
+// HoneycombMetric defines the Honeycomb query to perform canary analysis
+type HoneycombMetric struct {
+	// Query is a raw honeycomb query to perform
+	Query string `json:"query,omitempty" protobuf:"bytes,1,opt,name=query"`
+	// Dataset is the name of the honeycomb dataset to query
+	Dataset string `json:"dataset,omitempty" protobuf:"bytes,2,opt,name=dataset"`
+	// Timeout represents the duration within which a honeycomb query should complete. It is expressed in seconds.
+	// +optional
+	Timeout *int64 `json:"timeout,omitempty" protobuf:"bytes,4,opt,name=timeout"`
 }
 
 // PrometheusMetric defines the prometheus query to perform canary analysis
